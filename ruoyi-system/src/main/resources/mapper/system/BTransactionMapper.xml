@@ -7,27 +7,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="BTransaction" id="BTransactionResult">
         <result property="id"    column="id"    />
         <result property="transactionId"    column="transaction_id"    />
-        <result property="userId"    column="user_id"    />
+        <result property="blockId"    column="block_id"    />
         <result property="assetId"    column="asset_id"    />
+        <result property="fromAddress"    column="from_address"    />
+        <result property="toAddress"    column="to_address"    />
         <result property="amount"    column="amount"    />
-        <result property="type"    column="type"    />
         <result property="status"    column="status"    />
         <result property="createTime"    column="create_time"    />
+        <result property="comfirmCnt"    column="comfirm_cnt"    />
     </resultMap>
 
     <sql id="selectBTransactionVo">
-        select id, transaction_id, user_id, asset_id, amount, type, status, create_time from b_transaction
+        select id, transaction_id, block_id, asset_id, from_address, to_address, amount, status, create_time, comfirm_cnt from b_transaction
     </sql>
 
     <select id="selectBTransactionList" parameterType="BTransaction" resultMap="BTransactionResult">
         <include refid="selectBTransactionVo"/>
         <where>  
             <if test="transactionId != null  and transactionId != ''"> and transaction_id = #{transactionId}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="blockId != null "> and block_id = #{blockId}</if>
             <if test="assetId != null "> and asset_id = #{assetId}</if>
+            <if test="fromAddress != null  and fromAddress != ''"> and from_address = #{fromAddress}</if>
+            <if test="toAddress != null  and toAddress != ''"> and to_address = #{toAddress}</if>
             <if test="amount != null "> and amount = #{amount}</if>
-            <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="comfirmCnt != null "> and comfirm_cnt = #{comfirmCnt}</if>
         </where>
     </select>
     
@@ -40,21 +44,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into b_transaction
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="transactionId != null">transaction_id,</if>
-            <if test="userId != null">user_id,</if>
+            <if test="blockId != null">block_id,</if>
             <if test="assetId != null">asset_id,</if>
+            <if test="fromAddress != null">from_address,</if>
+            <if test="toAddress != null">to_address,</if>
             <if test="amount != null">amount,</if>
-            <if test="type != null">type,</if>
             <if test="status != null">status,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="comfirmCnt != null">comfirm_cnt,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="transactionId != null">#{transactionId},</if>
-            <if test="userId != null">#{userId},</if>
+            <if test="blockId != null">#{blockId},</if>
             <if test="assetId != null">#{assetId},</if>
+            <if test="fromAddress != null">#{fromAddress},</if>
+            <if test="toAddress != null">#{toAddress},</if>
             <if test="amount != null">#{amount},</if>
-            <if test="type != null">#{type},</if>
             <if test="status != null">#{status},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="comfirmCnt != null">#{comfirmCnt},</if>
          </trim>
     </insert>
 
@@ -62,12 +70,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update b_transaction
         <trim prefix="SET" suffixOverrides=",">
             <if test="transactionId != null">transaction_id = #{transactionId},</if>
-            <if test="userId != null">user_id = #{userId},</if>
+            <if test="blockId != null">block_id = #{blockId},</if>
             <if test="assetId != null">asset_id = #{assetId},</if>
+            <if test="fromAddress != null">from_address = #{fromAddress},</if>
+            <if test="toAddress != null">to_address = #{toAddress},</if>
             <if test="amount != null">amount = #{amount},</if>
-            <if test="type != null">type = #{type},</if>
             <if test="status != null">status = #{status},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="comfirmCnt != null">comfirm_cnt = #{comfirmCnt},</if>
         </trim>
         where id = #{id}
     </update>

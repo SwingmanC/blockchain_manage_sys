@@ -1,33 +1,57 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="transactionId">
+      <el-form-item label="" prop="transactionId">
         <el-input
           v-model="queryParams.transactionId"
-          placeholder="请输入${comment}"
+          placeholder="请输入"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="userId">
+      <el-form-item label="${comment}" prop="blockId">
         <el-input
-          v-model="queryParams.userId"
+          v-model="queryParams.blockId"
           placeholder="请输入${comment}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="assetId">
+      <el-form-item label="" prop="assetId">
         <el-input
           v-model="queryParams.assetId"
+          placeholder="请输入"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="fromAddress">
+        <el-input
+          v-model="queryParams.fromAddress"
           placeholder="请输入${comment}"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="amount">
+      <el-form-item label="${comment}" prop="toAddress">
+        <el-input
+          v-model="queryParams.toAddress"
+          placeholder="请输入${comment}"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="" prop="amount">
         <el-input
           v-model="queryParams.amount"
+          placeholder="请输入"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="${comment}" prop="comfirmCnt">
+        <el-input
+          v-model="queryParams.comfirmCnt"
           placeholder="请输入${comment}"
           clearable
           @keyup.enter.native="handleQuery"
@@ -87,13 +111,15 @@
 
     <el-table v-loading="loading" :data="transactionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="transactionId" />
-      <el-table-column label="${comment}" align="center" prop="userId" />
-      <el-table-column label="${comment}" align="center" prop="assetId" />
-      <el-table-column label="${comment}" align="center" prop="amount" />
-      <el-table-column label="${comment}" align="center" prop="type" />
-      <el-table-column label="${comment}" align="center" prop="status" />
+      <el-table-column label="" align="center" prop="id" />
+      <el-table-column label="" align="center" prop="transactionId" />
+      <el-table-column label="${comment}" align="center" prop="blockId" />
+      <el-table-column label="" align="center" prop="assetId" />
+      <el-table-column label="${comment}" align="center" prop="fromAddress" />
+      <el-table-column label="${comment}" align="center" prop="toAddress" />
+      <el-table-column label="" align="center" prop="amount" />
+      <el-table-column label="" align="center" prop="status" />
+      <el-table-column label="${comment}" align="center" prop="comfirmCnt" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -125,17 +151,26 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="transactionId">
-          <el-input v-model="form.transactionId" placeholder="请输入${comment}" />
+        <el-form-item label="" prop="transactionId">
+          <el-input v-model="form.transactionId" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入${comment}" />
+        <el-form-item label="${comment}" prop="blockId">
+          <el-input v-model="form.blockId" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="assetId">
-          <el-input v-model="form.assetId" placeholder="请输入${comment}" />
+        <el-form-item label="" prop="assetId">
+          <el-input v-model="form.assetId" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="amount">
-          <el-input v-model="form.amount" placeholder="请输入${comment}" />
+        <el-form-item label="${comment}" prop="fromAddress">
+          <el-input v-model="form.fromAddress" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="toAddress">
+          <el-input v-model="form.toAddress" placeholder="请输入${comment}" />
+        </el-form-item>
+        <el-form-item label="" prop="amount">
+          <el-input v-model="form.amount" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="${comment}" prop="comfirmCnt">
+          <el-input v-model="form.comfirmCnt" placeholder="请输入${comment}" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -176,11 +211,13 @@ export default {
         pageNum: 1,
         pageSize: 10,
         transactionId: null,
-        userId: null,
+        blockId: null,
         assetId: null,
+        fromAddress: null,
+        toAddress: null,
         amount: null,
-        type: null,
         status: null,
+        comfirmCnt: null
       },
       // 表单参数
       form: {},
@@ -212,12 +249,14 @@ export default {
       this.form = {
         id: null,
         transactionId: null,
-        userId: null,
+        blockId: null,
         assetId: null,
+        fromAddress: null,
+        toAddress: null,
         amount: null,
-        type: null,
         status: null,
-        createTime: null
+        createTime: null,
+        comfirmCnt: null
       };
       this.resetForm("form");
     },

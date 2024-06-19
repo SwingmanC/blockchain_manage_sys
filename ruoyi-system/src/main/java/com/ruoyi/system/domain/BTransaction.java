@@ -16,32 +16,40 @@ public class BTransaction extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** $column.columnComment */
+    /**  */
     private Long id;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /**  */
+    @Excel(name = "")
     private String transactionId;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private Long userId;
+    private Long blockId;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /**  */
+    @Excel(name = "")
     private Long assetId;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String fromAddress;
+
+    /** $column.columnComment */
+    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    private String toAddress;
+
+    /**  */
+    @Excel(name = "")
     private BigDecimal amount;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String type;
+    /**  */
+    @Excel(name = "")
+    private String status;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-    private String status;
+    private Long comfirmCnt;
 
     public void setId(Long id) 
     {
@@ -61,14 +69,14 @@ public class BTransaction extends BaseEntity
     {
         return transactionId;
     }
-    public void setUserId(Long userId) 
+    public void setBlockId(Long blockId) 
     {
-        this.userId = userId;
+        this.blockId = blockId;
     }
 
-    public Long getUserId() 
+    public Long getBlockId() 
     {
-        return userId;
+        return blockId;
     }
     public void setAssetId(Long assetId) 
     {
@@ -79,6 +87,24 @@ public class BTransaction extends BaseEntity
     {
         return assetId;
     }
+    public void setFromAddress(String fromAddress) 
+    {
+        this.fromAddress = fromAddress;
+    }
+
+    public String getFromAddress() 
+    {
+        return fromAddress;
+    }
+    public void setToAddress(String toAddress) 
+    {
+        this.toAddress = toAddress;
+    }
+
+    public String getToAddress() 
+    {
+        return toAddress;
+    }
     public void setAmount(BigDecimal amount) 
     {
         this.amount = amount;
@@ -87,15 +113,6 @@ public class BTransaction extends BaseEntity
     public BigDecimal getAmount() 
     {
         return amount;
-    }
-    public void setType(String type) 
-    {
-        this.type = type;
-    }
-
-    public String getType() 
-    {
-        return type;
     }
     public void setStatus(String status) 
     {
@@ -106,18 +123,29 @@ public class BTransaction extends BaseEntity
     {
         return status;
     }
+    public void setComfirmCnt(Long comfirmCnt) 
+    {
+        this.comfirmCnt = comfirmCnt;
+    }
+
+    public Long getComfirmCnt() 
+    {
+        return comfirmCnt;
+    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("transactionId", getTransactionId())
-            .append("userId", getUserId())
+            .append("blockId", getBlockId())
             .append("assetId", getAssetId())
+            .append("fromAddress", getFromAddress())
+            .append("toAddress", getToAddress())
             .append("amount", getAmount())
-            .append("type", getType())
             .append("status", getStatus())
             .append("createTime", getCreateTime())
+            .append("comfirmCnt", getComfirmCnt())
             .toString();
     }
 }
