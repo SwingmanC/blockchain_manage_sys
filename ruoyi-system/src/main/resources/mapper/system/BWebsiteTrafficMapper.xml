@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BWebsiteTrafficMapper">
+    
+    <resultMap type="BWebsiteTraffic" id="BWebsiteTrafficResult">
+        <result property="id"    column="id"    />
+        <result property="reqTime"    column="req_time"    />
+        <result property="url"    column="url"    />
+        <result property="referrer"    column="referrer"    />
+        <result property="userAgent"    column="user_agent"    />
+        <result property="ipAddress"    column="ip_address"    />
+        <result property="method"    column="method"    />
+        <result property="responseCode"    column="response_code"    />
+        <result property="responseSize"    column="response_size"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectBWebsiteTrafficVo">
+        select id, req_time, url, referrer, user_agent, ip_address, method, response_code, response_size, user_id from b_website_traffic
+    </sql>
+
+    <select id="selectBWebsiteTrafficList" parameterType="BWebsiteTraffic" resultMap="BWebsiteTrafficResult">
+        <include refid="selectBWebsiteTrafficVo"/>
+        <where>  
+            <if test="reqTime != null "> and req_time = #{reqTime}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="referrer != null  and referrer != ''"> and referrer = #{referrer}</if>
+            <if test="userAgent != null  and userAgent != ''"> and user_agent = #{userAgent}</if>
+            <if test="ipAddress != null  and ipAddress != ''"> and ip_address = #{ipAddress}</if>
+            <if test="method != null  and method != ''"> and method = #{method}</if>
+            <if test="responseCode != null "> and response_code = #{responseCode}</if>
+            <if test="responseSize != null "> and response_size = #{responseSize}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBWebsiteTrafficById" parameterType="Long" resultMap="BWebsiteTrafficResult">
+        <include refid="selectBWebsiteTrafficVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBWebsiteTraffic" parameterType="BWebsiteTraffic" useGeneratedKeys="true" keyProperty="id">
+        insert into b_website_traffic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reqTime != null">req_time,</if>
+            <if test="url != null">url,</if>
+            <if test="referrer != null">referrer,</if>
+            <if test="userAgent != null">user_agent,</if>
+            <if test="ipAddress != null">ip_address,</if>
+            <if test="method != null">method,</if>
+            <if test="responseCode != null">response_code,</if>
+            <if test="responseSize != null">response_size,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reqTime != null">#{reqTime},</if>
+            <if test="url != null">#{url},</if>
+            <if test="referrer != null">#{referrer},</if>
+            <if test="userAgent != null">#{userAgent},</if>
+            <if test="ipAddress != null">#{ipAddress},</if>
+            <if test="method != null">#{method},</if>
+            <if test="responseCode != null">#{responseCode},</if>
+            <if test="responseSize != null">#{responseSize},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBWebsiteTraffic" parameterType="BWebsiteTraffic">
+        update b_website_traffic
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reqTime != null">req_time = #{reqTime},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="referrer != null">referrer = #{referrer},</if>
+            <if test="userAgent != null">user_agent = #{userAgent},</if>
+            <if test="ipAddress != null">ip_address = #{ipAddress},</if>
+            <if test="method != null">method = #{method},</if>
+            <if test="responseCode != null">response_code = #{responseCode},</if>
+            <if test="responseSize != null">response_size = #{responseSize},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBWebsiteTrafficById" parameterType="Long">
+        delete from b_website_traffic where id = #{id}
+    </delete>
+
+    <delete id="deleteBWebsiteTrafficByIds" parameterType="String">
+        delete from b_website_traffic where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

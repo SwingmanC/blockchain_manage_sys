@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BAssetOwnershipMapper">
+    
+    <resultMap type="BAssetOwnership" id="BAssetOwnershipResult">
+        <result property="id"    column="id"    />
+        <result property="assetId"    column="asset_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBAssetOwnershipVo">
+        select id, asset_id, user_id, quantity, create_time, update_time from b_asset_ownership
+    </sql>
+
+    <select id="selectBAssetOwnershipList" parameterType="BAssetOwnership" resultMap="BAssetOwnershipResult">
+        <include refid="selectBAssetOwnershipVo"/>
+        <where>  
+            <if test="assetId != null "> and asset_id = #{assetId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+        </where>
+    </select>
+    
+    <select id="selectBAssetOwnershipById" parameterType="Long" resultMap="BAssetOwnershipResult">
+        <include refid="selectBAssetOwnershipVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBAssetOwnership" parameterType="BAssetOwnership" useGeneratedKeys="true" keyProperty="id">
+        insert into b_asset_ownership
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="assetId != null">asset_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="assetId != null">#{assetId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBAssetOwnership" parameterType="BAssetOwnership">
+        update b_asset_ownership
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="assetId != null">asset_id = #{assetId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBAssetOwnershipById" parameterType="Long">
+        delete from b_asset_ownership where id = #{id}
+    </delete>
+
+    <delete id="deleteBAssetOwnershipByIds" parameterType="String">
+        delete from b_asset_ownership where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BRiskRuleMapper">
+    
+    <resultMap type="BRiskRule" id="BRiskRuleResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="description"    column="description"    />
+        <result property="criteria"    column="criteria"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBRiskRuleVo">
+        select id, name, description, criteria, create_time, update_time from b_risk_rule
+    </sql>
+
+    <select id="selectBRiskRuleList" parameterType="BRiskRule" resultMap="BRiskRuleResult">
+        <include refid="selectBRiskRuleVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="criteria != null  and criteria != ''"> and criteria = #{criteria}</if>
+        </where>
+    </select>
+    
+    <select id="selectBRiskRuleById" parameterType="Long" resultMap="BRiskRuleResult">
+        <include refid="selectBRiskRuleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBRiskRule" parameterType="BRiskRule" useGeneratedKeys="true" keyProperty="id">
+        insert into b_risk_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="description != null">description,</if>
+            <if test="criteria != null">criteria,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="description != null">#{description},</if>
+            <if test="criteria != null">#{criteria},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBRiskRule" parameterType="BRiskRule">
+        update b_risk_rule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="criteria != null">criteria = #{criteria},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBRiskRuleById" parameterType="Long">
+        delete from b_risk_rule where id = #{id}
+    </delete>
+
+    <delete id="deleteBRiskRuleByIds" parameterType="String">
+        delete from b_risk_rule where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

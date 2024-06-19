@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BRiskEventMapper">
+    
+    <resultMap type="BRiskEvent" id="BRiskEventResult">
+        <result property="id"    column="id"    />
+        <result property="ruleId"    column="rule_id"    />
+        <result property="transactionId"    column="transaction_id"    />
+        <result property="severity"    column="severity"    />
+        <result property="status"    column="status"    />
+        <result property="startTime"    column="start_time"    />
+    </resultMap>
+
+    <sql id="selectBRiskEventVo">
+        select id, rule_id, transaction_id, severity, status, start_time from b_risk_event
+    </sql>
+
+    <select id="selectBRiskEventList" parameterType="BRiskEvent" resultMap="BRiskEventResult">
+        <include refid="selectBRiskEventVo"/>
+        <where>  
+            <if test="ruleId != null "> and rule_id = #{ruleId}</if>
+            <if test="transactionId != null "> and transaction_id = #{transactionId}</if>
+            <if test="severity != null  and severity != ''"> and severity = #{severity}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBRiskEventById" parameterType="Long" resultMap="BRiskEventResult">
+        <include refid="selectBRiskEventVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBRiskEvent" parameterType="BRiskEvent" useGeneratedKeys="true" keyProperty="id">
+        insert into b_risk_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ruleId != null">rule_id,</if>
+            <if test="transactionId != null">transaction_id,</if>
+            <if test="severity != null">severity,</if>
+            <if test="status != null">status,</if>
+            <if test="startTime != null">start_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ruleId != null">#{ruleId},</if>
+            <if test="transactionId != null">#{transactionId},</if>
+            <if test="severity != null">#{severity},</if>
+            <if test="status != null">#{status},</if>
+            <if test="startTime != null">#{startTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBRiskEvent" parameterType="BRiskEvent">
+        update b_risk_event
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ruleId != null">rule_id = #{ruleId},</if>
+            <if test="transactionId != null">transaction_id = #{transactionId},</if>
+            <if test="severity != null">severity = #{severity},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBRiskEventById" parameterType="Long">
+        delete from b_risk_event where id = #{id}
+    </delete>
+
+    <delete id="deleteBRiskEventByIds" parameterType="String">
+        delete from b_risk_event where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

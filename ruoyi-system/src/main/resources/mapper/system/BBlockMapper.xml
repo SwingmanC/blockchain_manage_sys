@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BBlockMapper">
+    
+    <resultMap type="BBlock" id="BBlockResult">
+        <result property="id"    column="id"    />
+        <result property="blockHash"    column="block_hash"    />
+        <result property="height"    column="height"    />
+        <result property="prevHash"    column="prev_hash"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="transactionCnt"    column="transaction_cnt"    />
+        <result property="size"    column="size"    />
+    </resultMap>
+
+    <sql id="selectBBlockVo">
+        select id, block_hash, height, prev_hash, create_time, transaction_cnt, size from b_block
+    </sql>
+
+    <select id="selectBBlockList" parameterType="BBlock" resultMap="BBlockResult">
+        <include refid="selectBBlockVo"/>
+        <where>  
+            <if test="blockHash != null  and blockHash != ''"> and block_hash = #{blockHash}</if>
+            <if test="height != null "> and height = #{height}</if>
+            <if test="prevHash != null  and prevHash != ''"> and prev_hash = #{prevHash}</if>
+            <if test="transactionCnt != null "> and transaction_cnt = #{transactionCnt}</if>
+            <if test="size != null "> and size = #{size}</if>
+        </where>
+    </select>
+    
+    <select id="selectBBlockById" parameterType="Long" resultMap="BBlockResult">
+        <include refid="selectBBlockVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBBlock" parameterType="BBlock" useGeneratedKeys="true" keyProperty="id">
+        insert into b_block
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blockHash != null">block_hash,</if>
+            <if test="height != null">height,</if>
+            <if test="prevHash != null">prev_hash,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="transactionCnt != null">transaction_cnt,</if>
+            <if test="size != null">size,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blockHash != null">#{blockHash},</if>
+            <if test="height != null">#{height},</if>
+            <if test="prevHash != null">#{prevHash},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="transactionCnt != null">#{transactionCnt},</if>
+            <if test="size != null">#{size},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBBlock" parameterType="BBlock">
+        update b_block
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="blockHash != null">block_hash = #{blockHash},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="prevHash != null">prev_hash = #{prevHash},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="transactionCnt != null">transaction_cnt = #{transactionCnt},</if>
+            <if test="size != null">size = #{size},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBBlockById" parameterType="Long">
+        delete from b_block where id = #{id}
+    </delete>
+
+    <delete id="deleteBBlockByIds" parameterType="String">
+        delete from b_block where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BWebsiteTrafficSumMapper">
+    
+    <resultMap type="BWebsiteTrafficSum" id="BWebsiteTrafficSumResult">
+        <result property="id"    column="id"    />
+        <result property="sumDate"    column="sum_date"    />
+        <result property="totalReqCnt"    column="total_req_cnt"    />
+        <result property="totalTraffic"    column="total_traffic"    />
+    </resultMap>
+
+    <sql id="selectBWebsiteTrafficSumVo">
+        select id, sum_date, total_req_cnt, total_traffic from b_website_traffic_sum
+    </sql>
+
+    <select id="selectBWebsiteTrafficSumList" parameterType="BWebsiteTrafficSum" resultMap="BWebsiteTrafficSumResult">
+        <include refid="selectBWebsiteTrafficSumVo"/>
+        <where>  
+            <if test="sumDate != null "> and sum_date = #{sumDate}</if>
+            <if test="totalReqCnt != null "> and total_req_cnt = #{totalReqCnt}</if>
+            <if test="totalTraffic != null "> and total_traffic = #{totalTraffic}</if>
+        </where>
+    </select>
+    
+    <select id="selectBWebsiteTrafficSumById" parameterType="Long" resultMap="BWebsiteTrafficSumResult">
+        <include refid="selectBWebsiteTrafficSumVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBWebsiteTrafficSum" parameterType="BWebsiteTrafficSum" useGeneratedKeys="true" keyProperty="id">
+        insert into b_website_traffic_sum
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sumDate != null">sum_date,</if>
+            <if test="totalReqCnt != null">total_req_cnt,</if>
+            <if test="totalTraffic != null">total_traffic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sumDate != null">#{sumDate},</if>
+            <if test="totalReqCnt != null">#{totalReqCnt},</if>
+            <if test="totalTraffic != null">#{totalTraffic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBWebsiteTrafficSum" parameterType="BWebsiteTrafficSum">
+        update b_website_traffic_sum
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sumDate != null">sum_date = #{sumDate},</if>
+            <if test="totalReqCnt != null">total_req_cnt = #{totalReqCnt},</if>
+            <if test="totalTraffic != null">total_traffic = #{totalTraffic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBWebsiteTrafficSumById" parameterType="Long">
+        delete from b_website_traffic_sum where id = #{id}
+    </delete>
+
+    <delete id="deleteBWebsiteTrafficSumByIds" parameterType="String">
+        delete from b_website_traffic_sum where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
