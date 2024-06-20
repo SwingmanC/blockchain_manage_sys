@@ -1,66 +1,66 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="reqTime">
+      <el-form-item label="请求日期" prop="reqTime">
         <el-date-picker clearable
           v-model="queryParams.reqTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
+          placeholder="请选择请求日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="${comment}" prop="url">
+      <el-form-item label="目的地址" prop="url">
         <el-input
           v-model="queryParams.url"
-          placeholder="请输入${comment}"
+          placeholder="请输入目的地址"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="referrer">
+      <el-form-item label="源地址" prop="referrer">
         <el-input
           v-model="queryParams.referrer"
-          placeholder="请输入${comment}"
+          placeholder="请输入源地址"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="ipAddress">
+      <el-form-item label="目标IP" prop="ipAddress">
         <el-input
           v-model="queryParams.ipAddress"
-          placeholder="请输入${comment}"
+          placeholder="请输入目标IP"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="method">
+      <el-form-item label="请求方法" prop="method">
         <el-input
           v-model="queryParams.method"
-          placeholder="请输入${comment}"
+          placeholder="请输入请求方法"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="responseCode">
+      <el-form-item label="响应码" prop="responseCode">
         <el-input
           v-model="queryParams.responseCode"
-          placeholder="请输入${comment}"
+          placeholder="请输入响应码"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="responseSize">
-        <el-input
-          v-model="queryParams.responseSize"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="${comment}" prop="userId">
+<!--      <el-form-item label="数据块大小" prop="responseSize">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.responseSize"-->
+<!--          placeholder="请输入数据块大小"-->
+<!--          clearable-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+      <el-form-item label="用户ID" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入${comment}"
+          placeholder="请输入用户ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -119,20 +119,20 @@
 
     <el-table v-loading="loading" :data="trafficList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="reqTime" width="180">
+      <el-table-column label="流量ID" align="center" prop="id" />
+      <el-table-column label="请求日期" align="center" prop="reqTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.reqTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="${comment}" align="center" prop="url" />
-      <el-table-column label="${comment}" align="center" prop="referrer" />
-      <el-table-column label="${comment}" align="center" prop="userAgent" />
-      <el-table-column label="${comment}" align="center" prop="ipAddress" />
-      <el-table-column label="${comment}" align="center" prop="method" />
-      <el-table-column label="${comment}" align="center" prop="responseCode" />
-      <el-table-column label="${comment}" align="center" prop="responseSize" />
-      <el-table-column label="${comment}" align="center" prop="userId" />
+      <el-table-column label="目的地址" align="center" prop="url" />
+      <el-table-column label="源地址" align="center" prop="referrer" />
+      <el-table-column label="代理信息" align="center" prop="userAgent" />
+      <el-table-column label="目标IP" align="center" prop="ipAddress" />
+      <el-table-column label="请求方法" align="center" prop="method" />
+      <el-table-column label="响应状态码" align="center" prop="responseCode" />
+      <el-table-column label="响应数据块大小" align="center" prop="responseSize" />
+      <el-table-column label="用户ID" align="center" prop="userId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -152,7 +152,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -164,37 +164,37 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="reqTime">
+        <el-form-item label="请求日期" prop="reqTime">
           <el-date-picker clearable
             v-model="form.reqTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择${comment}">
+            placeholder="请选择请求日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="${comment}" prop="url">
-          <el-input v-model="form.url" placeholder="请输入${comment}" />
+        <el-form-item label="目的地址" prop="url">
+          <el-input v-model="form.url" placeholder="请输入目的地址" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="referrer">
-          <el-input v-model="form.referrer" placeholder="请输入${comment}" />
+        <el-form-item label="源地址" prop="referrer">
+          <el-input v-model="form.referrer" placeholder="请输入源地址" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="userAgent">
-          <el-input v-model="form.userAgent" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="代理信息" prop="userAgent">
+          <el-input v-model="form.userAgent" type="textarea" placeholder="请输入代理信息" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="ipAddress">
-          <el-input v-model="form.ipAddress" placeholder="请输入${comment}" />
+        <el-form-item label="目标IP" prop="ipAddress">
+          <el-input v-model="form.ipAddress" placeholder="请输入目标IP" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="method">
-          <el-input v-model="form.method" placeholder="请输入${comment}" />
+        <el-form-item label="请求方法" prop="method">
+          <el-input v-model="form.method" placeholder="请输入请求方法" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="responseCode">
-          <el-input v-model="form.responseCode" placeholder="请输入${comment}" />
+        <el-form-item label="响应状态码" prop="responseCode">
+          <el-input v-model="form.responseCode" placeholder="请输入响应状态码" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="responseSize">
-          <el-input v-model="form.responseSize" placeholder="请输入${comment}" />
+        <el-form-item label="响应数据块大小" prop="responseSize">
+          <el-input v-model="form.responseSize" placeholder="请输入响应数据块大小" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入${comment}" />
+        <el-form-item label="用户ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入用户ID" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -305,7 +305,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加流量明细";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -314,7 +314,7 @@ export default {
       getTraffic(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改流量明细";
       });
     },
     /** 提交按钮 */
@@ -340,7 +340,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除流量编号为"' + ids + '"的数据项？').then(function() {
         return delTraffic(ids);
       }).then(() => {
         this.getList();

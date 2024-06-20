@@ -1,42 +1,42 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="blockHash">
+      <el-form-item label="区块哈希" prop="blockHash">
         <el-input
           v-model="queryParams.blockHash"
-          placeholder="请输入${comment}"
+          placeholder="请输入区块哈希"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="height">
+      <el-form-item label="区块高度" prop="height">
         <el-input
           v-model="queryParams.height"
-          placeholder="请输入${comment}"
+          placeholder="请输入区块高度"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="prevHash">
+      <el-form-item label="前区哈希" prop="prevHash">
         <el-input
           v-model="queryParams.prevHash"
-          placeholder="请输入${comment}"
+          placeholder="请输入前区哈希"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="transactionCnt">
-        <el-input
+      <el-form-item label="交易数量" prop="transactionCnt">
+        <el-input-number
           v-model="queryParams.transactionCnt"
-          placeholder="请输入${comment}"
+          placeholder="请输入交易数量"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="size">
+      <el-form-item label="区块大小" prop="size">
         <el-input
           v-model="queryParams.size"
-          placeholder="请输入${comment}"
+          placeholder="请输入区块大小"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -95,12 +95,12 @@
 
     <el-table v-loading="loading" :data="blockList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="blockHash" />
-      <el-table-column label="${comment}" align="center" prop="height" />
-      <el-table-column label="${comment}" align="center" prop="prevHash" />
-      <el-table-column label="${comment}" align="center" prop="transactionCnt" />
-      <el-table-column label="${comment}" align="center" prop="size" />
+      <el-table-column label="区块ID" align="center" prop="id" />
+      <el-table-column label="区块哈希" align="center" prop="blockHash" />
+      <el-table-column label="区块高度" align="center" prop="height" />
+      <el-table-column label="前区哈希" align="center" prop="prevHash" />
+      <el-table-column label="交易数量" align="center" prop="transactionCnt" />
+      <el-table-column label="区块大小" align="center" prop="size" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -120,7 +120,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -132,20 +132,20 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="blockHash">
-          <el-input v-model="form.blockHash" placeholder="请输入${comment}" />
+        <el-form-item label="区块哈希" prop="blockHash">
+          <el-input v-model="form.blockHash" placeholder="请输入区块哈希" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="height">
-          <el-input v-model="form.height" placeholder="请输入${comment}" />
+        <el-form-item label="区块高度" prop="height">
+          <el-input v-model="form.height" placeholder="请输入区块高度" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="prevHash">
-          <el-input v-model="form.prevHash" placeholder="请输入${comment}" />
+        <el-form-item label="前一个区块的哈希" prop="prevHash">
+          <el-input v-model="form.prevHash" placeholder="请输入前区哈希"/>
         </el-form-item>
-        <el-form-item label="${comment}" prop="transactionCnt">
-          <el-input v-model="form.transactionCnt" placeholder="请输入${comment}" />
+        <el-form-item label="区块中的交易数量" prop="transactionCnt">
+          <el-input v-model="form.transactionCnt" placeholder="请输入交易数量" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="size">
-          <el-input v-model="form.size" placeholder="请输入${comment}" />
+        <el-form-item label="区块大小" prop="size">
+          <el-input v-model="form.size" placeholder="请输入区块大小" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -249,7 +249,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加区块";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -258,7 +258,7 @@ export default {
       getBlock(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改区块";
       });
     },
     /** 提交按钮 */
@@ -284,7 +284,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除区块编号为"' + ids + '"的数据项？').then(function() {
         return delBlock(ids);
       }).then(() => {
         this.getList();

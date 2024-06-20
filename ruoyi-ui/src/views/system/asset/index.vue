@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="name">
+      <el-form-item label="资产名称" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入${comment}"
+          placeholder="请输入资产名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="symbol">
+      <el-form-item label="资产代码" prop="symbol">
         <el-input
           v-model="queryParams.symbol"
-          placeholder="请输入${comment}"
+          placeholder="请输入资产代码"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -71,11 +71,11 @@
 
     <el-table v-loading="loading" :data="assetList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="name" />
-      <el-table-column label="${comment}" align="center" prop="symbol" />
-      <el-table-column label="${comment}" align="center" prop="description" />
-      <el-table-column label="${comment}" align="center" prop="type" />
+      <el-table-column label="资产ID" align="center" prop="id" />
+      <el-table-column label="资产名称" align="center" prop="name" />
+      <el-table-column label="资产代码" align="center" prop="symbol" />
+      <el-table-column label="资产描述" align="center" prop="description" />
+      <el-table-column label="资产类型" align="center" prop="type" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -95,7 +95,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -107,14 +107,14 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="name">
-          <el-input v-model="form.name" placeholder="请输入${comment}" />
+        <el-form-item label="资产名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入资产名称" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="symbol">
-          <el-input v-model="form.symbol" placeholder="请输入${comment}" />
+        <el-form-item label="资产代码" prop="symbol">
+          <el-input v-model="form.symbol" placeholder="请输入资产代码" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="description">
-          <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="资产描述" prop="description">
+          <el-input v-model="form.description" type="textarea" placeholder="请输入资产描述" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -217,7 +217,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加系统资产";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -226,7 +226,7 @@ export default {
       getAsset(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改用户资产";
       });
     },
     /** 提交按钮 */
@@ -252,7 +252,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除资产编号为"' + ids + '"的数据项？').then(function() {
         return delAsset(ids);
       }).then(() => {
         this.getList();

@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="sumDate">
+      <el-form-item label="摘要日期" prop="sumDate">
         <el-date-picker clearable
           v-model="queryParams.sumDate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
+          placeholder="请选择摘要日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="${comment}" prop="totalReqCnt">
+      <el-form-item label="请求次数" prop="totalReqCnt">
         <el-input
           v-model="queryParams.totalReqCnt"
-          placeholder="请输入${comment}"
+          placeholder="请输入请求次数"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="totalTraffic">
+      <el-form-item label="总流量" prop="totalTraffic">
         <el-input
           v-model="queryParams.totalTraffic"
-          placeholder="请输入${comment}"
+          placeholder="请输入总流量"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -79,14 +79,14 @@
 
     <el-table v-loading="loading" :data="sumList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="sumDate" width="180">
+      <el-table-column label="序号" align="center" prop="id" />
+      <el-table-column label="摘要日期" align="center" prop="sumDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.sumDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="${comment}" align="center" prop="totalReqCnt" />
-      <el-table-column label="${comment}" align="center" prop="totalTraffic" />
+      <el-table-column label="当天总请求次数" align="center" prop="totalReqCnt" />
+      <el-table-column label="当天总流量" align="center" prop="totalTraffic" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -106,7 +106,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -118,19 +118,19 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="sumDate">
+        <el-form-item label="摘要日期" prop="sumDate">
           <el-date-picker clearable
             v-model="form.sumDate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择${comment}">
+            placeholder="请选择摘要日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="${comment}" prop="totalReqCnt">
-          <el-input v-model="form.totalReqCnt" placeholder="请输入${comment}" />
+        <el-form-item label="当天总请求次数" prop="totalReqCnt">
+          <el-input v-model="form.totalReqCnt" placeholder="请输入当天总请求次数" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="totalTraffic">
-          <el-input v-model="form.totalTraffic" placeholder="请输入${comment}" />
+        <el-form-item label="当天总流量" prop="totalTraffic">
+          <el-input v-model="form.totalTraffic" placeholder="请输入当天总流量" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -229,7 +229,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加流量摘要";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -238,7 +238,7 @@ export default {
       getSum(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改流量摘要";
       });
     },
     /** 提交按钮 */
@@ -264,7 +264,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除流量摘要编号为"' + ids + '"的数据项？').then(function() {
         return delSum(ids);
       }).then(() => {
         this.getList();

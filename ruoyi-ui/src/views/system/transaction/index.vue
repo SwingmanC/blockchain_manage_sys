@@ -1,58 +1,59 @@
+
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="" prop="transactionId">
+      <el-form-item label="交易哈希" prop="transactionId">
         <el-input
           v-model="queryParams.transactionId"
-          placeholder="请输入"
+          placeholder="请输入交易哈希"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="blockId">
+      <el-form-item label="区块ID" prop="blockId">
         <el-input
           v-model="queryParams.blockId"
-          placeholder="请输入${comment}"
+          placeholder="请输入区块ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="" prop="assetId">
+      <el-form-item label="资产ID" prop="assetId">
         <el-input
           v-model="queryParams.assetId"
-          placeholder="请输入"
+          placeholder="请输入资产ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="fromAddress">
+      <el-form-item label="发起地址" prop="fromAddress">
         <el-input
           v-model="queryParams.fromAddress"
-          placeholder="请输入${comment}"
+          placeholder="请输入发起地址"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="toAddress">
+      <el-form-item label="接收地址" prop="toAddress">
         <el-input
           v-model="queryParams.toAddress"
-          placeholder="请输入${comment}"
+          placeholder="请输入接收地址"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="" prop="amount">
+      <el-form-item label="交易金额" prop="amount">
         <el-input
           v-model="queryParams.amount"
-          placeholder="请输入"
+          placeholder="请输入交易金额"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="comfirmCnt">
+      <el-form-item label="确认次数" prop="comfirmCnt">
         <el-input
           v-model="queryParams.comfirmCnt"
-          placeholder="请输入${comment}"
+          placeholder="请输入确认次数"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -111,15 +112,15 @@
 
     <el-table v-loading="loading" :data="transactionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="" align="center" prop="id" />
-      <el-table-column label="" align="center" prop="transactionId" />
-      <el-table-column label="${comment}" align="center" prop="blockId" />
-      <el-table-column label="" align="center" prop="assetId" />
-      <el-table-column label="${comment}" align="center" prop="fromAddress" />
-      <el-table-column label="${comment}" align="center" prop="toAddress" />
-      <el-table-column label="" align="center" prop="amount" />
-      <el-table-column label="" align="center" prop="status" />
-      <el-table-column label="${comment}" align="center" prop="comfirmCnt" />
+      <el-table-column label="交易ID" align="center" prop="id" />
+      <el-table-column label="交易哈希" align="center" prop="transactionId" />
+      <el-table-column label="区块ID" align="center" prop="blockId" />
+      <el-table-column label="资产ID" align="center" prop="assetId" />
+      <el-table-column label="发起地址" align="center" prop="fromAddress" />
+      <el-table-column label="接收地址" align="center" prop="toAddress" />
+      <el-table-column label="交易金额" align="center" prop="amount" />
+      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="确认次数" align="center" prop="comfirmCnt" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -139,7 +140,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -151,26 +152,26 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="" prop="transactionId">
-          <el-input v-model="form.transactionId" placeholder="请输入" />
+        <el-form-item label="交易哈希" prop="transactionId">
+          <el-input v-model="form.transactionId" placeholder="请输入交易哈希" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="blockId">
-          <el-input v-model="form.blockId" placeholder="请输入${comment}" />
+        <el-form-item label="区块ID" prop="blockId">
+          <el-input v-model="form.blockId" placeholder="请输入区块ID" />
         </el-form-item>
-        <el-form-item label="" prop="assetId">
-          <el-input v-model="form.assetId" placeholder="请输入" />
+        <el-form-item label="资产ID" prop="assetId">
+          <el-input v-model="form.assetId" placeholder="请输入交易ID" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="fromAddress">
-          <el-input v-model="form.fromAddress" placeholder="请输入${comment}" />
+        <el-form-item label="发起地址" prop="fromAddress">
+          <el-input v-model="form.fromAddress" placeholder="请输入交易发起地址" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="toAddress">
-          <el-input v-model="form.toAddress" placeholder="请输入${comment}" />
+        <el-form-item label="接收地址" prop="toAddress">
+          <el-input v-model="form.toAddress" placeholder="请输入交易接收地址" />
         </el-form-item>
-        <el-form-item label="" prop="amount">
-          <el-input v-model="form.amount" placeholder="请输入" />
+        <el-form-item label="交易金额" prop="amount">
+          <el-input v-model="form.amount" placeholder="请输入交易金额" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="comfirmCnt">
-          <el-input v-model="form.comfirmCnt" placeholder="请输入${comment}" />
+        <el-form-item label="确认次数" prop="comfirmCnt">
+          <el-input v-model="form.comfirmCnt" placeholder="请输入确认次数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -280,7 +281,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加交易";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -289,7 +290,7 @@ export default {
       getTransaction(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改交易";
       });
     },
     /** 提交按钮 */
@@ -315,7 +316,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除交易编号为"' + ids + '"的数据项？').then(function() {
         return delTransaction(ids);
       }).then(() => {
         this.getList();

@@ -1,36 +1,36 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="ruleId">
+      <el-form-item label="规则ID" prop="ruleId">
         <el-input
           v-model="queryParams.ruleId"
-          placeholder="请输入${comment}"
+          placeholder="请输入规则ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="transactionId">
+      <el-form-item label="流水ID" prop="transactionId">
         <el-input
           v-model="queryParams.transactionId"
-          placeholder="请输入${comment}"
+          placeholder="请输入交易流水ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="severity">
+      <el-form-item label="风险等级" prop="severity">
         <el-input
           v-model="queryParams.severity"
-          placeholder="请输入${comment}"
+          placeholder="请输入风险等级"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="startTime">
+      <el-form-item label="开始时间" prop="startTime">
         <el-date-picker clearable
           v-model="queryParams.startTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择${comment}">
+          placeholder="请选择风险开始时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -87,12 +87,12 @@
 
     <el-table v-loading="loading" :data="eventList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="ruleId" />
-      <el-table-column label="${comment}" align="center" prop="transactionId" />
-      <el-table-column label="${comment}" align="center" prop="severity" />
-      <el-table-column label="${comment}" align="center" prop="status" />
-      <el-table-column label="${comment}" align="center" prop="startTime" width="180">
+      <el-table-column label="序号" align="center" prop="id" />
+      <el-table-column label="规则ID" align="center" prop="ruleId" />
+      <el-table-column label="流水ID" align="center" prop="transactionId" />
+      <el-table-column label="风险等级" align="center" prop="severity" />
+      <el-table-column label="风险状态" align="center" prop="status" />
+      <el-table-column label="开始时间" align="center" prop="startTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -116,7 +116,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -128,21 +128,21 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="ruleId">
-          <el-input v-model="form.ruleId" placeholder="请输入${comment}" />
+        <el-form-item label="规则ID" prop="ruleId">
+          <el-input v-model="form.ruleId" placeholder="请输入规则ID" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="transactionId">
-          <el-input v-model="form.transactionId" placeholder="请输入${comment}" />
+        <el-form-item label="流水ID" prop="transactionId">
+          <el-input v-model="form.transactionId" placeholder="请输入交易流水ID" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="severity">
-          <el-input v-model="form.severity" placeholder="请输入${comment}" />
+        <el-form-item label="风险等级" prop="severity">
+          <el-input v-model="form.severity" placeholder="风险等级" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="startTime">
+        <el-form-item label="开始时间" prop="startTime">
           <el-date-picker clearable
             v-model="form.startTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择${comment}">
+            placeholder="请选择风险开始时间">
           </el-date-picker>
         </el-form-item>
       </el-form>
@@ -246,7 +246,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加风险事件";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -255,7 +255,7 @@ export default {
       getEvent(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改风险事件";
       });
     },
     /** 提交按钮 */
@@ -281,7 +281,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除风险事件编号为"' + ids + '"的数据项？').then(function() {
         return delEvent(ids);
       }).then(() => {
         this.getList();

@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="userId">
+      <el-form-item label="用户ID" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入${comment}"
+          placeholder="请输入用户ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="address">
+      <el-form-item label="地址" prop="address">
         <el-input
           v-model="queryParams.address"
-          placeholder="请输入${comment}"
+          placeholder="请输入地址"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="balance">
+      <el-form-item label="余额" prop="balance">
         <el-input
           v-model="queryParams.balance"
-          placeholder="请输入${comment}"
+          placeholder="请输入余额"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -79,11 +79,11 @@
 
     <el-table v-loading="loading" :data="walletList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="userId" />
-      <el-table-column label="${comment}" align="center" prop="address" />
-      <el-table-column label="${comment}" align="center" prop="type" />
-      <el-table-column label="${comment}" align="center" prop="balance" />
+      <el-table-column label="序号" align="center" prop="id" />
+      <el-table-column label="用户ID" align="center" prop="userId" />
+      <el-table-column label="地址" align="center" prop="address" />
+      <el-table-column label="产品类型" align="center" prop="type" />
+      <el-table-column label="余额" align="center" prop="balance" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -103,7 +103,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -115,14 +115,14 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入${comment}" />
+        <el-form-item label="用户ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入用户ID" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="address">
-          <el-input v-model="form.address" placeholder="请输入${comment}" />
+        <el-form-item label="地址" prop="address">
+          <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="balance">
-          <el-input v-model="form.balance" placeholder="请输入${comment}" />
+        <el-form-item label="余额" prop="balance">
+          <el-input v-model="form.balance" placeholder="请输入余额" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -225,7 +225,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加用户钱包";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -234,7 +234,7 @@ export default {
       getWallet(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改用户钱包";
       });
     },
     /** 提交按钮 */
@@ -260,7 +260,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除钱包编号为"' + ids + '"的数据项？').then(function() {
         return delWallet(ids);
       }).then(() => {
         this.getList();

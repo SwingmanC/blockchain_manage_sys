@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="${comment}" prop="assetId">
+      <el-form-item label="资产ID" prop="assetId">
         <el-input
           v-model="queryParams.assetId"
-          placeholder="请输入${comment}"
+          placeholder="请输入资产ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="userId">
+      <el-form-item label="用户ID" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入${comment}"
+          placeholder="请输入用户ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="quantity">
+      <el-form-item label="资产数量" prop="quantity">
         <el-input
           v-model="queryParams.quantity"
-          placeholder="请输入${comment}"
+          placeholder="请输入资产数量"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -79,10 +79,10 @@
 
     <el-table v-loading="loading" :data="ownershipList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="${comment}" align="center" prop="id" />
-      <el-table-column label="${comment}" align="center" prop="assetId" />
-      <el-table-column label="${comment}" align="center" prop="userId" />
-      <el-table-column label="${comment}" align="center" prop="quantity" />
+      <el-table-column label="资产所有权ID" align="center" prop="id" />
+      <el-table-column label="资产ID" align="center" prop="assetId" />
+      <el-table-column label="用户ID" align="center" prop="userId" />
+      <el-table-column label="资产数量" align="center" prop="quantity" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -102,7 +102,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -114,14 +114,14 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="${comment}" prop="assetId">
-          <el-input v-model="form.assetId" placeholder="请输入${comment}" />
+        <el-form-item label="资产ID" prop="assetId">
+          <el-input v-model="form.assetId" placeholder="请输入资产ID" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入${comment}" />
+        <el-form-item label="用户ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入用户ID" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="quantity">
-          <el-input v-model="form.quantity" placeholder="请输入${comment}" />
+        <el-form-item label="资产数量" prop="quantity">
+          <el-input v-model="form.quantity" placeholder="请输入资产数量" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -222,7 +222,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加用户资产";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -231,7 +231,7 @@ export default {
       getOwnership(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改用户资产";
       });
     },
     /** 提交按钮 */
@@ -257,7 +257,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除资产所有权编号为"' + ids + '"的数据项？').then(function() {
         return delOwnership(ids);
       }).then(() => {
         this.getList();
