@@ -138,11 +138,15 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <div ref="lineChart" style="width: 800px; height: 400px;"></div>
   </div>
 </template>
 
 <script>
-import { listSum, getSum, delSum, addSum, updateSum } from "@/api/system/sum";
+import { listSum, getSum, delSum, addSum, updateSum, getSumByWeek} from "@/api/system/sum";
+import * as echarts from 'echarts';
+import {parseTime} from "@/utils/ruoyi";
 
 export default {
   name: "Sum",
@@ -178,11 +182,17 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+      },
+      //折线图数据
+      weekDateList: [],
+      weekTrafficList: [],
     };
   },
   created() {
     this.getList();
+  },
+  mounted() {
+    this.initLineChart()
   },
   methods: {
     /** 查询【请填写功能名称】列表 */
@@ -276,6 +286,37 @@ export default {
       this.download('system/sum/export', {
         ...this.queryParams
       }, `sum_${new Date().getTime()}.xlsx`)
+    },
+    initLineChart() {
+      getSumByWeek().then(response =>{
+        const data = response.data;
+        for(let i=0;i<data.length;++i){
+          this.weekDateList[i] = parseTime(data[i]['sumDate'], '{y}-{m}-{d}');
+          this.weekTrafficList[i] = data[i]['totalTraffic'];
+        }
+        const chartDom = this.$refs.lineChart;
+        const trafficChart = echarts.init(chartDom);
+        const option = {
+          title: {
+            text: '近7天流量变化情况'
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          xAxis: {
+            type: 'category',
+            data: this.weekDateList
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            data: this.weekTrafficList,
+            type: 'line'
+          }]
+        };
+        trafficChart.setOption(option);
+      });
     }
   }
 };

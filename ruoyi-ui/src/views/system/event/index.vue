@@ -25,12 +25,12 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="开始时间" prop="startTime">
+      <el-form-item label="发生时间" prop="startTime">
         <el-date-picker clearable
           v-model="queryParams.startTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择风险开始时间">
+          placeholder="请选择风险发生时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -92,7 +92,7 @@
       <el-table-column label="流水ID" align="center" prop="transactionId" />
       <el-table-column label="风险等级" align="center" prop="severity" />
       <el-table-column label="风险状态" align="center" prop="status" />
-      <el-table-column label="开始时间" align="center" prop="startTime" width="180">
+      <el-table-column label="发生时间" align="center" prop="startTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -137,12 +137,12 @@
         <el-form-item label="风险等级" prop="severity">
           <el-input v-model="form.severity" placeholder="风险等级" />
         </el-form-item>
-        <el-form-item label="开始时间" prop="startTime">
+        <el-form-item label="发生时间" prop="startTime">
           <el-date-picker clearable
             v-model="form.startTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择风险开始时间">
+            placeholder="请选择风险发生时间">
           </el-date-picker>
         </el-form-item>
       </el-form>

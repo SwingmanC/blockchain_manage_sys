@@ -58,4 +58,6 @@ public interface IBWebsiteTrafficSumService
      * @return 结果
      */
     public int deleteBWebsiteTrafficSumById(Long id);
+
+    public List<BWebsiteTrafficSum> selectTrafficSumListByWeek();
 }

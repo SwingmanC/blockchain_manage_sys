@@ -58,4 +58,6 @@ public interface BWebsiteTrafficSumMapper
      * @return 结果
      */
     public int deleteBWebsiteTrafficSumByIds(Long[] ids);
+
+    public List<BWebsiteTrafficSum> selectTrafficSumListByWeek();
 }

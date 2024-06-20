@@ -51,11 +51,13 @@
         />
       </el-form-item>
       <el-form-item label="确认次数" prop="comfirmCnt">
-        <el-input
+        <el-input-number
           v-model="queryParams.comfirmCnt"
+          :min="0"
           placeholder="请输入确认次数"
+          controls-position="right"
           clearable
-          @keyup.enter.native="handleQuery"
+          @change="handleQuery"
         />
       </el-form-item>
       <el-form-item>

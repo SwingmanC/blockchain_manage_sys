@@ -42,3 +42,10 @@ export function delSum(id) {
     method: 'delete'
   })
 }
+
+export function getSumByWeek(){
+  return request({
+    url:'/system/sum/week',
+    method:'get'
+  })
+}

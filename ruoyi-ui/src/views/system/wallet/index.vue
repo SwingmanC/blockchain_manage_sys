@@ -18,7 +18,7 @@
         />
       </el-form-item>
       <el-form-item label="余额" prop="balance">
-        <el-input
+        <el-input-number
           v-model="queryParams.balance"
           placeholder="请输入余额"
           clearable
@@ -122,7 +122,7 @@
           <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
         <el-form-item label="余额" prop="balance">
-          <el-input v-model="form.balance" placeholder="请输入余额" />
+          <el-input-number v-model="form.balance" placeholder="请输入余额" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

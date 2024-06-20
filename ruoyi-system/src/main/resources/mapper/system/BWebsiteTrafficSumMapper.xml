@@ -63,4 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectTrafficSumListByWeek" resultMap="BWebsiteTrafficSumResult">
+        <include refid="selectBWebsiteTrafficSumVo"/>
+        where sum_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    </select>
 </mapper>

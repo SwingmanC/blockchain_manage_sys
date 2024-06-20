@@ -101,4 +101,13 @@ public class BWebsiteTrafficSumController extends BaseController
     {
         return toAjax(bWebsiteTrafficSumService.deleteBWebsiteTrafficSumByIds(ids));
     }
+
+    /**
+     *  返回近7天的流量摘要
+     */
+    @PreAuthorize("@ss.hasPermi('system:sum:week')")
+    @GetMapping("/week")
+    public AjaxResult getTrafficSumByWeek(){
+        return success(bWebsiteTrafficSumService.selectTrafficSumListByWeek());
+    }
 }

@@ -90,4 +90,9 @@ public class BWebsiteTrafficSumServiceImpl implements IBWebsiteTrafficSumService
     {
         return bWebsiteTrafficSumMapper.deleteBWebsiteTrafficSumById(id);
     }
+
+    @Override
+    public List<BWebsiteTrafficSum> selectTrafficSumListByWeek() {
+        return bWebsiteTrafficSumMapper.selectTrafficSumListByWeek();
+    }
 }

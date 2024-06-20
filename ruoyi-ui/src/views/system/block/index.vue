@@ -10,11 +10,13 @@
         />
       </el-form-item>
       <el-form-item label="区块高度" prop="height">
-        <el-input
+        <el-input-number
           v-model="queryParams.height"
+          :min="0"
           placeholder="请输入区块高度"
+          controls-position="right"
           clearable
-          @keyup.enter.native="handleQuery"
+          @change="handleQuery"
         />
       </el-form-item>
       <el-form-item label="前区哈希" prop="prevHash">
@@ -28,19 +30,26 @@
       <el-form-item label="交易数量" prop="transactionCnt">
         <el-input-number
           v-model="queryParams.transactionCnt"
+          :min="0"
           placeholder="请输入交易数量"
+          controls-position="right"
           clearable
-          @keyup.enter.native="handleQuery"
+          @change="handleQuery"
         />
       </el-form-item>
+
       <el-form-item label="区块大小" prop="size">
-        <el-input
+        <el-input-number
           v-model="queryParams.size"
+          :min="0"
           placeholder="请输入区块大小"
+          controls-position="right"
           clearable
-          @keyup.enter.native="handleQuery"
+          @change="handleQuery"
         />
       </el-form-item>
+
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
